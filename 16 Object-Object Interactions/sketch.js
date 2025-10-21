@@ -12,9 +12,9 @@ function setup() {
 
 function mousePressed(){
   // create one node per mousePRESS
-  //for(let i = 0; i < 100; i++){
+  for(let i = 0; i < 5; i++){
   nodes.push(new csNode(mouseX, mouseY))
-  //}
+  }
 }
 
 
