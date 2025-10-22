@@ -11,34 +11,34 @@ let eastbound = [];
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-  
+
   for(let i = 0; i < 20; i++){
-    westbound.push(new Car(this.x, this.y))
+    westbound.push(new Car(2))
   }
 
-  for(let m = 0; m < 20; m++){
-    eastbound.push(new Car(this.x, this.y2))
+  for (let m = 0; m < 20; m++) {
+    eastbound.push(new Car(1))
   }
 }
 
 function draw() {
-  background(124,252,0);
+  background(124, 252, 0);
   drawRoad();
-  
-  // for(let w of westbound){
-  //   w.display();
-  //   w.move();
-  // }
 
-   for(let e of eastbound){
-     e.display();
-     e.move();
+  for(let w of westbound){
+  w.display1();
+  w.move();
+  }
+
+  for (let e of eastbound) {
+    e.display2();
+    e.move();
   }
 }
 
 
 
-function drawRoad(){
+function drawRoad() {
   // draws the road for the cars
   fill(0, 0, 0);
   rect(0, 235, width, 250);
@@ -49,99 +49,176 @@ function drawRoad(){
   // road markers for the road
   fill(255, 255, 0)
 
-  for(let m = 10; m < width; m += width/12){
-    rect(m, height/2, 50, 25)
+  for (let m = 10; m < width; m += width / 12) {
+    rect(m, height / 2, 50, 25)
   }
 }
 
 
-class Car{
-// 1. Constructor
-  constructor(){
-    this.x = 0; 
-    this.y = 500; 
-    this.y2 = 250;
+class Car {
+  // 1. Constructor
+  constructor(side) {
+    this.x = 0;
+    this.y = random(500,660);
+    this.y2 = random(250,400);
     this.speed = random(0,15);
-    //this.direction = 
+    this.side = side;
     this.c = color(random(255), random(255), random(255))
   }
   // 2. Class Methods
-
-  display(){
-    ///////////////
-    //** CAR 1 **//
-    ///////////////
-
-    // TRUCK START
-    // TRUCK BODY
-    fill(this.c);
-    rect(this.x, this.y, 110, 70);
-    // TRUCK BOX
-    fill(0,0,0)
-    rect(this.x + 4, this.y + 10, 40, 50)
-    // WINDSHEILD
-    fill(0,0,0)
-    rect(this.x + 60, this.y + 2.5, 30, 65)
-    // HEADLIGHT 1
-    fill(255,235,0)
-    rect(this.x + 95, this.y + 5, 10, 10)
-    // HEADLIGHT 2
-    fill(255,235,0)
-    rect(this.x + 95, this.y + 55, 10, 10)
-    // TRUCK END
+  carPicker(){
+    if(this.side === 1){
+      random(this.truck1(), this.car1())
     }
-    
-    display(){
-    ///////////////
-    //** CAR 2 **//
-    ///////////////
+    else if(this.side === 2){
+      random(this.truck2(), this.car2())
+    }
 
-    // SPORTS CAR START
-    // REAR FENDER
-    fill(this.c)
-    circle(this.x, this.y2+ 30, 70)
-    // FRONT FENDER
-    fill(this.c)
-    circle(this.x + 90, this.y2+ 30, 70)
-    // CAR BODY
-    noStroke();
-    fill(this.c);
-    rect(this.x, this.y2, 100, 60);
-    // WINDSHEILD
-    fill(0,0,0)
-    rect(this.x + 60, this.y2 + 5, 30, 50)
-    // REAR WINDSHEILD
-    fill(0,0,0)
-    rect(this.x + 5, this.y2 + 10, 30, 40)
-    // HEADLIGHT 1
-    fill(255,235,0)
-    rect(this.x + 95, this.y2 + 5, 10, 10)
-    // HEADLIGHT 2
-    fill(255,235,0)
-    rect(this.x + 95, this.y2 + 45, 10, 10)
-    // WING
-    fill(255, 255, 255)
-    rect(this.x - 55, this.y2, 20, 60)
-    // WING SUPPORT 1
-    fill(255, 255, 255)
-    rect(this.x - 50, this.y2 + 10, 30, 5)
-    // WING SUPPORT 2
-    fill(255, 255, 255)
-    rect(this.x - 50, this.y2 + 45, 30, 5)
-    // SPORTS CAR END
   }
 
-  move(){
-    this.x += this.speed;
-    if(this.x > width) this.x = 0;
+  truck1(){
+    // WESTBOUND TRUCK START
+      // TRUCK BODY
+      fill(this.c);
+      rect(this.x, this.y2, 110, 70);
+      // TRUCK BOX
+      fill(0, 0, 0)
+      rect(this.x + 4, this.y2 + 10, 40, 50)
+      // WINDSHEILD
+      fill(0, 0, 0)
+      rect(this.x + 60, this.y2 + 2.5, 30, 65)
+      // HEADLIGHT 1
+      fill(255, 235, 0)
+      rect(this.x + 95, this.y2 + 5, 10, 10)
+      // HEADLIGHT 2
+      fill(255, 235, 0)
+      rect(this.x + 95, this.y2 + 55, 10, 10)
+      // TRUCK END
+  }
+  
+  
+  truck2(){
+    // EASTBOUND TRUCK START
+      // TRUCK BODY
+      fill(this.c);
+      rect(this.x, this.y, 110, 70);
+      // TRUCK BOX
+      fill(0, 0, 0)
+      rect(this.x + 63, this.y + 10, 40, 50)
+      // WINDSHEILD
+      fill(0, 0, 0)
+      rect(this.x + 20, this.y + 2.5, 30, 65)
+      // HEADLIGHT 1
+      fill(255, 235, 0)
+      rect(this.x + 5, this.y + 5, 10, 10)
+      // HEADLIGHT 2
+      fill(255, 235, 0)
+      rect(this.x + 5, this.y + 55, 10, 10)
+      // TRUCK END
+  }
+  
+  
+  car1(){
+    // WESTBOUND SPORTS CAR START
+      // REAR FENDER
+      fill(this.c)
+      circle(this.x, this.y2 + 30, 70)
+      // FRONT FENDER
+      fill(this.c)
+      circle(this.x + 90, this.y2 + 30, 70)
+      // CAR BODY
+      noStroke();
+      fill(this.c);
+      rect(this.x, this.y2, 100, 60);
+      // WINDSHEILD
+      fill(0, 0, 0)
+      rect(this.x + 60, this.y2 + 5, 30, 50)
+      // REAR WINDSHEILD
+      fill(0, 0, 0)
+      rect(this.x + 5, this.y2 + 10, 30, 40)
+      // HEADLIGHT 1
+      fill(255, 235, 0)
+      rect(this.x + 95, this.y2 + 5, 10, 10)
+      // HEADLIGHT 2
+      fill(255, 235, 0)
+      rect(this.x + 95, this.y2 + 45, 10, 10)
+      // WING
+      fill(255, 255, 255)
+      rect(this.x - 55, this.y2, 20, 60)
+      // WING SUPPORT 1
+      fill(255, 255, 255)
+      rect(this.x - 50, this.y2 + 10, 30, 5)
+      // WING SUPPORT 2
+      fill(255, 255, 255)
+      rect(this.x - 50, this.y2 + 45, 30, 5)
+      // SPORTS CAR END
+  
+  }
+  
+  
+  car2(){
+   // EASTBOUND SPORTS CAR START
+      // REAR FENDER
+      fill(this.c)
+      circle(this.x, this.y + 30, 70)
+      // FRONT FENDER
+      fill(this.c)
+      circle(this.x + 90, this.y + 30, 70)
+      // CAR BODY
+      noStroke();
+      fill(this.c);
+      rect(this.x, this.y, 100, 60);
+      // WINDSHEILD
+      fill(0, 0, 0)
+      rect(this.x, this.y + 5, 30, 50)
+      // REAR WINDSHEILD
+      fill(0, 0, 0)
+      rect(this.x + 75, this.y + 10, 30, 40)
+      // HEADLIGHT 1
+      fill(255, 235, 0)
+      rect(this.x - 15, this.y + 5, 10, 10)
+      // HEADLIGHT 2
+      fill(255, 235, 0)
+      rect(this.x - 15, this.y + 45, 10, 10)
+      // WING
+      fill(255, 255, 255)
+      rect(this.x + 125, this.y, 20, 60)
+      // WING SUPPORT 1
+      fill(255, 255, 255)
+      rect(this.x + 110, this.y + 10, 30, 5)
+      // WING SUPPORT 2
+      fill(255, 255, 255)
+      rect(this.x + 110, this.y + 45, 30, 5)
+      // SPORTS CAR END
+  }
+  
+
+  display1() {
+    this.truck1();
+    this.car1();
   }
 
-  westBound(){
+  display2() {
+    this.truck2();
+    this.car2();
+  }
 
+  move() {
+    if (this.side === 1) {
+      if (this.x < 0) {
+        this.x = width;
+      }
+      else {
+        this.x -= this.speed;
+      }
+    }
+    else if (this.side === 2) {
+      if (this.x > width) {
+        this.x = 0;
+      }
+      else {
+        this.x += this.speed;
+      }
+    }
   }
 }
-
-
-
-
-
