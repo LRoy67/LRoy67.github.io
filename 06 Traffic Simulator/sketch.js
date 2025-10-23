@@ -26,12 +26,12 @@ function draw() {
   drawRoad();
 
   for(let w of westbound){
-  w.display1();
+  w.display();
   w.move();
   }
 
   for (let e of eastbound) {
-    e.display2();
+    e.display();
     e.move();
   }
 }
@@ -63,17 +63,39 @@ class Car {
     this.y2 = random(250,400);
     this.speed = random(0,15);
     this.side = side;
-    this.c = color(random(255), random(255), random(255))
+    this.c = color(random(255), random(255), random(255));
+    this.random = int(random(1, 3));
   }
   // 2. Class Methods
   carPicker(){
     if(this.side === 1){
-      random(this.truck1(), this.car1())
-    }
+      if(this.random === 1){
+        this.car2()}
+        if(this.random === 2){
+          this.truck2();
+        }
+      }
+    
     else if(this.side === 2){
-      random(this.truck2(), this.car2())
+      if(this.random === 1){
+        this.car1()}
+      if(this.random === 2){
+        this.truck1();
+      }
     }
+  }
 
+  speedUp(){
+
+  }
+
+  speedDown(){
+
+  }
+
+  changeColor(){
+    random(1, 100);
+    if(random === 67)
   }
 
   truck1(){
@@ -193,14 +215,8 @@ class Car {
   }
   
 
-  display1() {
-    this.truck1();
-    this.car1();
-  }
-
-  display2() {
-    this.truck2();
-    this.car2();
+  display() {
+    this.carPicker();
   }
 
   move() {
