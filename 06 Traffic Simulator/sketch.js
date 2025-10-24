@@ -65,6 +65,7 @@ class Car {
     this.side = side;
     this.c = color(random(255), random(255), random(255));
     this.random = int(random(1, 3));
+    this.random2 = 0;
   }
   // 2. Class Methods
   carPicker(){
@@ -86,16 +87,27 @@ class Car {
   }
 
   speedUp(){
-
+    this.random2 = random(1, 100);
+    if(this.random2 === 6){
+      print("Up");
+      this.speed = speed+2;
+    }
   }
 
   speedDown(){
-
+    this.random2 = random(1, 100);
+    if(this.random2 === 9){
+      print("Down");
+      this.speed = speed/2;
+    }
   }
 
   changeColor(){
-    random(1, 100);
-    if(random === 67)
+    this.random2 = random(1, 100);
+    if(this.random2 === 67){
+      print("Change");
+      fill(this.c);
+    }
   }
 
   truck1(){
@@ -217,6 +229,9 @@ class Car {
 
   display() {
     this.carPicker();
+    this.changeColor();
+    this.speedDown();
+    this.speedUp();
   }
 
   move() {
