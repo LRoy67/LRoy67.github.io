@@ -1,22 +1,19 @@
-// 21 2D Array Basics
+// Puzzle Game
 // Logan Roy
-// November 3, 2025
+// November 4, 2025
 
 // Global Varriables
 // 0(black), 255(white)
-// grid is 5 x 4 in dimension
 let grid = [
-  [0, 0, 0, 255, 0],
-  [255, 0, 255, 0, 255],
-  [255, 255, 0, 255, 255],
-  [0, 255, 0, 0, 0],
-  [0, 255, 0, 0, 0]
+  [255, 255, 255, 255, 255],
+  [255, 255, 255, 255, 255],
+  [255, 255, 255, 255, 255],
+  [255, 255, 255, 255, 255],
+  [255, 255, 255, 255, 255]
 ];
-
 let rows = grid.length;
 let cols = grid[0].length;
-
-let squareSize = 60;
+let squareSize = 100;
 
 
 
@@ -27,48 +24,59 @@ function setup() {
 function draw() {
   background(220);
   renderGrid();
-  //text(floor(mouseX / squareSize), mouseX, mouseY);
-  //print(floor(mouseX / squareSize));
   print(getCurrentX(), getCurrentY());
+  //selection();
 }
 
 function mousePressed(){
-  // flip current tile
-  // upgrade: only do this if mouse is on canvas
   let x = getCurrentX();
   let y = getCurrentY();
-
-  // ALWAYS: flip the "focused" tile
   flip(x, y);
-
-  // if they exist:
-  // flip our north east south west neighbor(cross pattern)
-  if(x + 1 < cols) flip(x + 1, y);
+  if(!keyIsDown(SHIFT)){
+  if(x + 1 <= cols) flip(x + 1, y);
+  if(x - 1 <= cols) flip(x - 1, y);
   if(y - 1 >= 0) flip(x, y - 1);
+  if(y + 1 >= 0) flip(x, y + 1);
+  }
+  print("working here boss in mousePressed")
 }
 
+function selection(){
+  let x = getCurrentX();
+  let y = getCurrentY();
+  fill(0, 255, 0, 80)
+  square(x*squareSize, y*squareSize, squareSize);
+  if(x + 1 < cols) square(x + 1*squareSize, y*squareSize, squareSize);
+  if(x - 1 < cols) square(x - 1*squareSize, y*squareSize, squareSize);
+  if(y - 1 >= 0) square(x*squareSize, y - 1*squareSize, squareSize);
+  if(y + 1 >= 0) square(x*squareSize, y + 1*squareSize, squareSize);
+
+  print("working here boss in selection")
+
+}
+
+
+
+
+
+
 function getCurrentX(){
-  // determine current col of mouse position
   let constrainedX = constrain(mouseX, 0, width - 1);
   return floor(constrainedX / squareSize)
 }
 
 function getCurrentY(){
-  // determine current row of mouse position
   let constrainedY = constrain(mouseY, 0, height - 1);
   return floor(constrainedY / squareSize)
 }
 
 function flip(x, y){
-  // takes a tile @ x,y and inverts it's value
   if(grid[y][x] === 0)grid[y][x]=255;
   else grid[y][x]= 0;
 }
 
 
 function renderGrid(){
-  // interpret the info in the 2D array, and draw 
-  // a grid of squares on the screen to reflect it
   for (let y = 0; y < rows; y++){
     for (let x = 0; x < cols; x++){
       let fillColor = grid[y][x];
