@@ -19,52 +19,8 @@ let squareSize = 60;
 
 function setup() {
   createCanvas(cols*squareSize, rows*squareSize);
-  for(let i = 0; i < 3; i++){
-    grid[i].push(randomStart());
-    }
-}
-
-function draw() {
-  background(220);
-  renderGrid();
-  selection();
-  print(getCurrentX(), getCurrentY());
-
-  if(grid === 255){
-    print("you win!")
-  }
-}
-
-function mousePressed(){
-  let x = getCurrentX();
-  let y = getCurrentY();
-  flip(x, y);
-  if(!keyIsDown(SHIFT)){
-  if(x + 1 < cols) flip(x + 1, y);
-  if(x - 1 < cols) flip(x - 1, y);
-  if(y - 1 >= 0) flip(x, y - 1);
-  if(y + 1 >= 0) flip(x, y + 1);
-  }
-  print("working here boss in mousePressed")
-}
-
-function selection(){
-  let x = getCurrentX();
-  let y = getCurrentY();
-  fill(0, 255, 0, 80)
-  square(x*squareSize, y*squareSize, squareSize);
-  if(x + 1 < cols) square(x + 1*squareSize, y*squareSize, squareSize);
-  //if(x - 1 < cols) square(x - 1*squareSize, y*squareSize, squareSize);
-  //if(y - 1 >= rows) square(x*squareSize, y - 1*squareSize, squareSize);
-  //if(y + 1 >= rows) square(x*squareSize, y + 1*squareSize, squareSize);
-
-  print("working here boss in selection")
-
-}
-
-function randomStart(){
-  random(1, 4);
-  if(random === 1){
+  tree = random(1, 4);
+  if(tree === 1){
     grid = [
       [0, 255, 0, 255, 0],
       [0, 255, 0, 255, 0],
@@ -73,7 +29,7 @@ function randomStart(){
       [0, 255, 0, 255, 0]
     ];
   }
-  if(random === 2){
+  if(tree === 2){
     grid = [
       [0, 255, 0, 255, 0],
       [255, 0, 255, 255, 255],
@@ -82,7 +38,7 @@ function randomStart(){
       [255, 0, 255, 255, 0]
     ];
   }
-  if(random === 3){
+  if(tree === 3){
     grid = [
       [255, 0, 255, 0, 255],
       [255, 0, 255, 255, 255],
@@ -92,7 +48,80 @@ function randomStart(){
     ];
   }
   print("working here boss in randomStart")
+}
 
+function draw() {
+  background(220);
+  renderGrid();
+  selection();
+  print(getCurrentX(), getCurrentY());
+  winner();
+}
+
+function winner(){
+  if(grid === 255){
+    fill(0);
+    text("fghfgh",44,66);
+  }
+}
+
+
+function mousePressed(){
+  let x = getCurrentX();
+  let y = getCurrentY();
+  flip(x, y);
+  if(!keyIsDown(SHIFT)){
+  if(x + 1 < cols) flip(x + 1, y);
+  if(x - 1 >= 0) flip(x - 1, y);
+  if(y - 1 >= 0) flip(x, y - 1);
+  if(y + 1 < cols) flip(x, y + 1);
+  }
+  print("working here boss in mousePressed")
+}
+
+function selection(){
+  let x = getCurrentX();
+  let y = getCurrentY();
+  fill(0, 255, 0, 80)
+  square(x*squareSize, y*squareSize, squareSize);
+  if(x + 1 <= cols) square((x + 1)*squareSize, y*squareSize, squareSize);
+  if(x - 1 >= 0) square((x - 1)*squareSize, y*squareSize, squareSize);
+  if(y - 1 >= 0) square(x*squareSize, (y - 1)*squareSize, squareSize);
+  if(y + 1 <= cols) square(x*squareSize, (y + 1)*squareSize, squareSize);
+
+  print("working here boss in selection")
+}
+
+function randomStart(){
+  tree = random(1, 4);
+  if(tree === 1){
+    grid = [
+      [0, 255, 0, 255, 0],
+      [0, 255, 0, 255, 0],
+      [0, 255, 0, 255, 0],
+      [0, 255, 0, 255, 0],
+      [0, 255, 0, 255, 0]
+    ];
+  }
+  if(tree === 2){
+    grid = [
+      [0, 255, 0, 255, 0],
+      [255, 0, 255, 255, 255],
+      [255, 0, 255, 0, 255],
+      [0, 255, 255, 255, 0],
+      [255, 0, 255, 255, 0]
+    ];
+  }
+  if(tree === 3){
+    grid = [
+      [255, 0, 255, 0, 255],
+      [255, 0, 255, 255, 255],
+      [255, 0, 0, 255, 0],
+      [255, 0, 255, 255, 255],
+      [0, 0, 255, 0, 255]
+    ];
+  }
+  print("working here boss in randomStart")
 }
 
 
