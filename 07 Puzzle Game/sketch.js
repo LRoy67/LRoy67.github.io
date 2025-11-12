@@ -19,7 +19,7 @@ let squareSize = 60;
 
 function setup() {
   createCanvas(cols*squareSize, rows*squareSize);
-  tree = random(1, 4);
+  tree = int(random(1, 4));
   if(tree === 1){
     grid = [
       [0, 255, 0, 255, 0],
@@ -59,9 +59,18 @@ function draw() {
 }
 
 function winner(){
-  if(grid === 255){
-    fill(0);
-    text("fghfgh",44,66);
+  let win = 0;
+  for(let y = 0; y < rows; y++){
+    for(let x = 0; x < cols; x++){
+      if(grid[y][x] === 255)
+        win++
+    }
+  }
+  print(win);
+  if(win === (rows*cols)){
+    textSize(50);
+    fill(0)
+    text("You Win!", width / 2 - 90, height / 2)
   }
 }
 
@@ -91,41 +100,6 @@ function selection(){
 
   print("working here boss in selection")
 }
-
-function randomStart(){
-  tree = random(1, 4);
-  if(tree === 1){
-    grid = [
-      [0, 255, 0, 255, 0],
-      [0, 255, 0, 255, 0],
-      [0, 255, 0, 255, 0],
-      [0, 255, 0, 255, 0],
-      [0, 255, 0, 255, 0]
-    ];
-  }
-  if(tree === 2){
-    grid = [
-      [0, 255, 0, 255, 0],
-      [255, 0, 255, 255, 255],
-      [255, 0, 255, 0, 255],
-      [0, 255, 255, 255, 0],
-      [255, 0, 255, 255, 0]
-    ];
-  }
-  if(tree === 3){
-    grid = [
-      [255, 0, 255, 0, 255],
-      [255, 0, 255, 255, 255],
-      [255, 0, 0, 255, 0],
-      [255, 0, 255, 255, 255],
-      [0, 0, 255, 0, 255]
-    ];
-  }
-  print("working here boss in randomStart")
-}
-
-
-
 
 function getCurrentX(){
   let constrainedX = constrain(mouseX, 0, width - 1);
