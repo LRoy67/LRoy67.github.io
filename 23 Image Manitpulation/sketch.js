@@ -30,11 +30,52 @@ function draw() {
   loadPixels(); // fills the "canvas" pixel array
   
   // run a filter to modify the pixel array
-  boost();
+  //boost();
+  //greyscale();
+  background(0);
+  textImage();
 
 
-  updatePixels();
+  //updatePixels();
 }
+
+function textImage(){
+  // render an image using characters
+  fill(255);
+  for(let x = 0; x < width; x += 10){
+    for(let y = 0; y < height; y += 10){
+      let avg = getAvg(x, y);
+      if(avg > 200) text("%", x, y);
+      else if(avg > 100)
+    }
+  }
+}
+
+
+
+
+function getAvg(x, y){
+  // return the average intensity of pixel (x, y)
+  let i = (width*y + x) * 4;
+  let r = pixels[i];
+  let g = pixels[i + 1];
+  let b = pixels[i + 2];
+  return(r+g+b)/3
+}
+function greyscale(){
+  // use average value of each pixel to turn it grey
+  for(let x = 0; x < width; x++){
+    for(let y = 0; y < height; y++){
+      let avg = getAvg(x,y);
+      setPixel(x, y, avg, avg, avg)
+    }
+  }
+}
+
+
+
+
+
 
 function boost(){
   // brightening filter
