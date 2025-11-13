@@ -2,6 +2,7 @@
 // Logan Roy
 // November 12, 2025
 // working with images, translation between 2D and 1D indices
+// part 2: working with video
 let pilot;
 
 function setup() {
@@ -26,34 +27,39 @@ function setPixel(x, y, r, g, b){
 }
 
 function draw() {
-  image(pilot, 0, 0)
-  loadPixels(); // fills the "canvas" pixel array
-  
-  // run a filter to modify the pixel array
-  //boost();
-  //greyscale();
-  background(0);
-  textImage();
-
-
-  //updatePixels();
+  if(started){
+    image(pilot, 0, 0)
+    loadPixels(); // fills the "canvas" pixel array
+    // run a filter to modify the pixel array
+    //boost();
+    //greyscale();
+    background(0);
+    textImage();
+    //updatePixels();
+  }
+  else{
+    text("Click to start", width/2, height/2)
+  }
 }
+
+
 
 function textImage(){
   // render an image using characters
   fill(255);
-  for(let x = 0; x < width; x += 10){
-    for(let y = 0; y < height; y += 10){
+  let scaleAmount = 5;
+  textSize(scaleAmount);
+  for(let x = 0; x < width; x += scaleAmount){
+    for(let y = 0; y < height; y += scaleAmount){
       let avg = getAvg(x, y);
-      if(avg > 220)      text("&", x, y);
-      else if(avg > 180) text("O", x, y);
-      else if(avg > 140) text("/", x, y);
-      else if(avg > 100) text("=", x, y);
-      else if(avg > 40) text("=", x, y);
+      if(avg > 220)      text("6", x, y);
+      else if(avg > 180) text("$", x, y);
+      else if(avg > 140) text(")", x, y);
+      else if(avg > 100) text("0", x, y);
+      else if(avg > 40) text(".", x, y);
     }
   }
 }
-
 
 
 
@@ -77,9 +83,6 @@ function greyscale(){
 
 
 
-
-
-
 function boost(){
   // brightening filter
   let boost = map(mouseX, 0, width, -100, 100)
@@ -92,8 +95,20 @@ function boost(){
 
 }
 
+
+let started = false;
+
+function mousePressed(){
+  started = true;
+  resizeCanvas(pilot.width, pilot.height, false);
+  pilot.loop();
+}
+
+
 async function loadAssets(){
-  pilot = await loadImage("assets/aviator.png");
+  //pilot = await loadImage("assets/aviator.png");
+  pilot = await createVideo("assets/bball.mp4");
+  pilot.hide();
 }
 
 
