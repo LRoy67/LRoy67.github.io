@@ -167,6 +167,7 @@ let race;
   
 //   //background(0);
 //   fiveColorize();
+//   updatePixels();
 // }
 
 // async function loadAssets(){
@@ -192,35 +193,35 @@ let race;
 //  }
 
 //  function fiveColorize(){
-//   let scaleAmount = 5;
-//   for(let x = 0; x < width; x += scaleAmount){
-//     for(let y = 0; y < height; y += scaleAmount){
-//       let avg = getAvg(x, y, r, g, b);
+
+//   for(let x = 0; x < width; x += 1){
+//     for(let y = 0; y < height; y += 1){
+//       let avg = getAvg(x, y);
 //       if(avg > 205){
 //         r = 170;
 //         g = 230;
 //         b = 220;
 //         setPixel(x, y, r, g, b)
 //       }
-//       else if(avg > 155 && avg < 205){
+//       else if(avg >= 155 && avg <= 205){
 //         r = 105;
 //         g = 150;
 //         b = 210;
 //         setPixel(x, y, r, g, b)
 //       }
-//       else if(avg > 105 && avg < 155){
+//       else if(avg >= 105 && avg <= 155){
 //         r = 120;
 //         g = 180;
 //         b = 60;
 //         setPixel(x, y, r, g, b)
 //       }
-//       else if(avg > 55 && avg < 105){
+//       else if(avg >= 55 && avg <= 105){
 //         r = 130;
 //         g = 30;
 //         b = 130;
 //         setPixel(x, y, r, g, b)
 //       }
-//       else if(avg > 0 && avg < 54){
+//       else if(avg >= 0 && avg <= 54){
 //         r = 90;
 //         g = 10;
 //         b = 50;
@@ -257,7 +258,8 @@ function draw() {
   loadPixels();
   
   //background(0);
-  raceSplit();
+  fingerMirror();
+  updatePixels();
 }
 
 async function loadAssets(){
@@ -275,48 +277,26 @@ function setPixelOneD(pos, r, g, b){
   pixels[pos + 2] = b;
 }
 
-function setPixel(posR, r, g, b, a=255){
+function setPixel(posR, r, g, b){
   pixels[posR] = r;
   pixels[posR + 1] = g;
   pixels[posR + 2] = b;
-  pixels[posR + 3] = a;
  }
 
- function raceSplit(){
+ function fingerMirror(){
+  for(let y = 0; y < hand.height; y += 1){
+    let offset = hand.width * 4
   for(let x = 0; x < hand.width; x++){
-    for(let y = 0; y < hand.height; y++){
-      let loc = (x + y * hand.width) * 4;
-
-      // let red = getRed(loc);
-      // let green = 0;
-      // let blue = getBlue(loc);
-      // setPixel(loc, red, green, blue);
-
-      let red = getRed(loc);
-      let green = 0;
-      let blue = getBlue(loc);
-      if((x < hand.width/2)*4){
-        if((y < hand.height/2)*4){
-        setPixel(loc, red, green, blue);
-        offset -= 8
-      }}
+    if(x < hand.width/2){
+     
+      let position =((x+ (y*hand.width))*4)+ offset;
+      let r = pixels[position];
+      let g = pixels[position + 1];
+      let b = pixels[position + 2];
+      setPixelOneD((x +(y*width))*4, r, g, b);
+      offset -= 8;
     }
+   }
   }
-  updatePixels();
  }
 
- function getRed(posR){
-    return pixels[posR];
- }
-
-  function getGreen(posR){
-   return pixels[posR + 1];
- }
-
- function getBlue(posR){
-   return pixels[posR + 2];
- }
-
- function getAlpha(posR){
-   return pixels[posR + 3];
- }
