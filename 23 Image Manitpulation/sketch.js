@@ -42,8 +42,6 @@ function draw() {
   }
 }
 
-
-
 function textImage(){
   // render an image using characters
   fill(255);
@@ -60,8 +58,6 @@ function textImage(){
     }
   }
 }
-
-
 
 function getAvg(x, y){
   // return the average intensity of pixel (x, y)
@@ -81,8 +77,6 @@ function greyscale(){
   }
 }
 
-
-
 function boost(){
   // brightening filter
   let boost = map(mouseX, 0, width, -100, 100)
@@ -95,15 +89,12 @@ function boost(){
 
 }
 
-
 let started = false;
-
 function mousePressed(){
   started = true;
   resizeCanvas(pilot.width, pilot.height, false);
   pilot.loop();
 }
-
 
 async function loadAssets(){
   //pilot = await loadImage("assets/aviator.png");
